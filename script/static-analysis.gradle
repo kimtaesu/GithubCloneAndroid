@@ -1,0 +1,12 @@
+def scriptDir = "$project.rootDir/script"
+ext {
+    reportsDir = "$project.buildDir/reports"
+    rulesDir = "$scriptDir/rules"
+}
+
+apply from: "$scriptDir/lint.gradle"
+apply from: "$scriptDir/ktlint.gradle"
+apply from: "$scriptDir/detekt.gradle"
+
+
+lint.dependsOn 'ktlint', 'detekt'

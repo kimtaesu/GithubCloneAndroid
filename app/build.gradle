@@ -1,0 +1,134 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-kapt'
+apply from: "$project.rootDir/script/static-analysis.gradle"
+apply from: "$project.rootDir/script/jacoco.gradle"
+apply from: "$project.rootDir/script/allopen.gradle"
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+    defaultConfig {
+        applicationId "com.hucet.github"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "com.hucet.github.testing.TestRunner"
+        multiDexEnabled true
+
+        buildConfigField 'Long', 'NETWORK_TIMEOUT_MILLIS', "3000L"
+    }
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+    testOptions.unitTests.includeAndroidResources = true
+}
+androidExtensions {
+    experimental = true
+}
+dependencies {
+    debugImplementation deps.leakcanary.debug
+    releaseImplementation deps.leakcanary.release
+    debugImplementation deps.leakcanary.fragment
+
+    implementation deps.androidX.appCompat
+    implementation deps.androidX.preference
+    implementation deps.androidX.recyclerview
+    implementation deps.androidX.cardview
+    implementation deps.androidX.material
+
+    implementation deps.androidX.room.runtime
+    implementation deps.androidX.room.rxjava2
+
+    implementation deps.androidX.lifecycle.runtime
+    implementation deps.androidX.lifecycle.extensions
+    implementation deps.androidX.lifecycle.commonJava8
+
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
+    implementation deps.retrofit.rxjava
+
+    implementation deps.glide.runtime
+
+    implementation deps.dagger.runtime
+    implementation deps.dagger.android
+    implementation deps.dagger.android_support
+    implementation deps.androidX.constraintlayout
+    implementation deps.kotlin.stdlib
+
+    implementation deps.rxkotlin
+    implementation deps.rx_android
+    implementation deps.timber
+
+    implementation deps.rxBinding.binding
+    implementation deps.rxBinding.viewpager
+
+    implementation deps.firebase.remoteConfig
+    implementation deps.firebase.core
+    debugImplementation deps.stetho
+
+    implementation deps.kotlin.coroutines_core
+    implementation deps.kotlin.coroutines_android
+
+    implementation deps.locksecure.pin
+
+    implementation deps.firebase.remoteConfig
+    implementation deps.preferenceHolder
+
+    implementation deps.work.runtime
+    implementation deps.work.runtime_ktx
+    implementation deps.core_ktx
+    implementation deps.okhttp_logging_interceptor
+    kapt deps.dagger.android_support_compiler
+    kapt deps.dagger.compiler
+    kapt deps.androidX.room.compiler
+    kapt deps.androidX.lifecycle.compiler
+
+    testImplementation deps.junit
+    testImplementation deps.robolectric
+    testImplementation deps.mock_web_server
+    testImplementation deps.androidX.test.archCore
+    testImplementation deps.mockito.core
+    testImplementation deps.mock_kotlin
+    testImplementation deps.androidX.test.monitor
+    testImplementation deps.kotlintest.assertions
+    testImplementation deps.androidX.test.core
+
+    androidTestImplementation deps.androidX.test.rules
+    androidTestImplementation deps.androidX.test.runner
+    androidTestImplementation deps.androidX.test.espressoCore
+    androidTestImplementation deps.androidX.test.espressoContrib
+    androidTestImplementation deps.androidX.test.espressoIntents
+    androidTestImplementation deps.androidX.test.extJunit
+    androidTestImplementation deps.work.testing
+    androidTestImplementation deps.mockito.core
+    androidTestImplementation deps.arch_core.testing
+    androidTestImplementation deps.mockito.android
+    androidTestImplementation deps.uiautomator
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+apply plugin: 'com.google.gms.google-services'
