@@ -114,8 +114,8 @@ dependencies {
     testImplementation deps.kotlintest.assertions
     testImplementation deps.androidX.test.core
 
-    androidTestImplementation deps.androidX.test.rules
-    androidTestImplementation deps.androidX.test.runner
+    androidTestImplementation deps.atsl.runner
+    androidTestImplementation deps.atsl.rules
     androidTestImplementation deps.androidX.test.espressoCore
     androidTestImplementation deps.androidX.test.espressoContrib
     androidTestImplementation deps.androidX.test.espressoIntents
