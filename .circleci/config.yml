@@ -99,7 +99,7 @@ references:
   decode_gcloud_key: &decode_gcloud_key
     run:
       name: Decode Google Cloud credentials
-      command: echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/client-secret.json
+      command: echo $GCLOUD_SERVICE_KEY > ${HOME}/client-secret.json
 
   # Fabric
 
@@ -109,11 +109,8 @@ references:
       command: echo 'export FABRIC_KEY="$FABRIC_KEY"' >> $BASH_ENV
   decode_fabric_key: &decode_fabric_key
     run:
-      name: asdadasd
-      command: echo $FABRIC_KEY | base64 -di
-    run:
       name: Decode Fabric key
-      command: echo $FABRIC_KEY | base64 -di > app/fabric.properties
+      command: echo $FABRIC_KEY > app/fabric.properties
 
 jobs:
 
