@@ -99,8 +99,8 @@ dependencies {
     implementation deps.firebase.core
     debugImplementation deps.stetho
 
-//    implementation deps.kotlin.coroutines_core
-//    implementation deps.kotlin.coroutines_android
+    implementation deps.kotlin.coroutines_core
+    implementation deps.kotlin.coroutines_android
 
     implementation deps.locksecure.pin
 
