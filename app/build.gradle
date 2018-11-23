@@ -42,6 +42,12 @@ android {
         test.java.srcDirs += "src/test-common/java"
     }
     testOptions.unitTests.includeAndroidResources = true
+    aaptOptions {
+        cruncherEnabled project.hasProperty('ciBuild')
+    }
+    dexOptions {
+        preDexLibraries !project.hasProperty('ciBuild')
+    }
 }
 androidExtensions {
     experimental = true

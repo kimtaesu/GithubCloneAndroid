@@ -5,7 +5,7 @@ references:
   ## Cache
 
   cache_key: &cache_key
-    key: cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle" }}-{{ checksum "mobile/build.gradle" }}
+    key: cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
   restore_cache: &restore_cache
     restore_cache:
       <<: *cache_key
@@ -30,16 +30,16 @@ references:
     persist_to_workspace:
       root: *workspace
       paths:
-        - mobile/build/intermediates
-        - mobile/build/outputs/androidTest-results
-        - mobile/build/outputs/apk
-        - mobile/build/outputs/code-coverage
-        - mobile/build/test-results
+        - app/build/intermediates
+        - app/build/outputs/androidTest-results
+        - app/build/outputs/apk
+        - app/build/outputs/code-coverage
+        - app/build/test-results
   persist_release_workspace: &persist_release_workspace
     persist_to_workspace:
       root: *workspace
       paths:
-        - mobile/build
+        - app/build
   attach_firebase_workspace: &attach_firebase_workspace
     attach_workspace:
       at: *workspace
@@ -88,7 +88,7 @@ references:
   decode_gservices_key: &decode_gservices_key
     run:
       name: Decode Google Services key
-      command: echo $GOOGLE_SERVICES_KEY | base64 -di > mobile/google-services.json
+      command: echo $GOOGLE_SERVICES_KEY | base64 -di > app/google-services.json
 
   # Google Cloud Service
 
@@ -110,7 +110,7 @@ references:
   decode_fabric_key: &decode_fabric_key
     run:
       name: Decode Fabric key
-      command: echo $FABRIC_KEY | base64 -di > mobile/fabric.properties
+      command: echo $FABRIC_KEY | base64 -di > app/fabric.properties
 
 jobs:
 
@@ -129,10 +129,10 @@ jobs:
       - *decode_gservices_key
       - run:
           name: Gradle build (debug)
-          command: ./gradlew -PciBuild=true :mobile:assembleDebug :mobile:assembleAndroidTest
+          command: ./gradlew -PciBuild=true :app:assembleDebug :app:assembleAndroidTest
       - *persist_debug_workspace
       - store_artifacts:
-          path: mobile/build/outputs/apk/
+          path: app/build/outputs/apk/
           destination: /apk/
 
   ## Build release APK
@@ -154,13 +154,13 @@ jobs:
       - *decode_fabric_key
       - run:
           name: Gradle build (release)
-          command: ./gradlew -PciBuild=true :mobile:assembleRelease
+          command: ./gradlew -PciBuild=true assembleRelease
       - *persist_release_workspace
       - store_artifacts:
-          path: mobile/build/outputs/apk/
+          path: app/build/outputs/apk/
           destination: /apk/
       - store_artifacts:
-          path: mobile/build/outputs/mapping/
+          path: app/build/outputs/mapping/
           destination: /mapping/
 
   ## Check code quality
@@ -177,14 +177,11 @@ jobs:
       - *export_gservices_key
       - *decode_gservices_key
       - run:
-          name: Run Checkstyle
-          command: ./gradlew -PciBuild=true :mobile:customCheckstyle
-      - run:
-          name: Run FindBugs
-          command: ./gradlew -PciBuild=true :mobile:customFindBugs
+          name: Run Lint
+          command: ./gradlew -PciBuild=true lint
       - *persist_debug_workspace
       - store_artifacts:
-          path: mobile/build/reports/
+          path: app/build/reports/
           destination: /reports/
 
   ## Run unit tests
@@ -202,13 +199,13 @@ jobs:
       - *decode_gservices_key
       - run:
           name: Run unit tests
-          command: ./gradlew -PciBuild=true :mobile:testDebugUnitTest
+          command: ./gradlew -PciBuild=true testDebugUnitTest
       - *persist_debug_workspace
       - store_artifacts:
-          path: mobile/build/reports/
+          path: app/build/reports/
           destination: /reports/
       - store_test_results:
-          path: mobile/build/test-results/
+          path: app/build/test-results/
           destination: /test-results/
 
   ## Run instrumented tests
@@ -227,7 +224,7 @@ jobs:
           command: gcloud auth activate-service-account firebase-adminsdk-p9qvk@newspaper-84169.iam.gserviceaccount.com --key-file ${HOME}/client-secret.json
       - run:
           name: Run instrumented test on Firebase Test Lab
-          command: gcloud firebase test android run --type instrumentation --app mobile/build/outputs/apk/debug/mobile-debug.apk --test mobile/build/outputs/apk/androidTest/debug/mobile-debug-androidTest.apk --device model=sailfish,version=26,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
+          command: gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=sailfish,version=26,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
       - run:
           name: Create directory to store test results
           command: mkdir firebase
@@ -253,20 +250,20 @@ jobs:
       - *attach_firebase_workspace
       - run:
           name: Move Firebase coverage report
-          command: mkdir -p mobile/build/outputs/code-coverage/connected && cp firebase/sailfish-26-en_US-portrait/artifacts/coverage.ec mobile/build/outputs/code-coverage/connected/coverage.ec
+          command: mkdir -p app/build/outputs/code-coverage/connected && cp firebase/sailfish-26-en_US-portrait/artifacts/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
       - *export_gservices_key
       - *decode_gservices_key
       - run:
           name: Generate JaCoCo report
-          command: ./gradlew -PciBuild=true :mobile:jacocoTestReport
-      - run:
-          name: Upload coverage report to Codacy
-          command: ./gradlew -PciBuild=true uploadCoverageToCodacy
+          command: ./gradlew -PciBuild=true jacocoTestReport
+#      - run:
+#          name: Upload coverage report to Codacy
+#          command: ./gradlew -PciBuild=true uploadCoverageToCodacy
       - run:
           name: Upload coverage report to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
       - store_artifacts:
-          path: mobile/build/reports/
+          path: app/build/reports/
           destination: /reports/
 
   ## Deploy release APK to Fabric Beta
