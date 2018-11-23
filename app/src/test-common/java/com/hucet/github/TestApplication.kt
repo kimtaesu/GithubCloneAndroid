@@ -5,4 +5,7 @@ class TestApplication : MyApplication() {
     override fun onCreate() {
         super.onCreate()
     }
+
+    override fun initFabric() {
+    }
 }

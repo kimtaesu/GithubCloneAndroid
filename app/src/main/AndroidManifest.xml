@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.hucet.github">
-
     <application
             android:allowBackup="false"
+            android:name=".MyApplication"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="01a8a326ef40f1e4010685ff3fe389ad91c04149"/>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
