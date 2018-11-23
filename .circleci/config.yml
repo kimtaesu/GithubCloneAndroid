@@ -77,7 +77,7 @@ references:
   decode_android_key: &decode_android_key
     run:
       name: Decode Android key store
-      command: echo $ANDROID_KEY_STORE | base64 -di > key-store.jks
+      command: echo $ANDROID_KEY_STORE | base64 --decode > key-store.jks
 
   # Google Services
 
@@ -99,7 +99,7 @@ references:
   decode_gcloud_key: &decode_gcloud_key
     run:
       name: Decode Google Cloud credentials
-      command: echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/client-secret.json
+      command: echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/client-secret.json
 
   # Fabric
 
@@ -110,7 +110,7 @@ references:
   decode_fabric_key: &decode_fabric_key
     run:
       name: Decode Fabric key
-      command: echo $FABRIC_KEY | base64 -di > app/fabric.properties
+      command: echo $FABRIC_KEY | base64 --decode > app/fabric.properties
 
 jobs:
 
@@ -219,9 +219,6 @@ jobs:
       - run:
           name: Set Google Cloud target project
           command: gcloud config set project $PROJECT_ID
-      - run:
-          name: Authenticate with Google Cloud
-          command: cat ${HOME}/client-secret.json
       - run:
           name: Authenticate with Google Cloud
           command: gcloud auth activate-service-account $FIREBASE_SERVICE_ID --key-file ${HOME}/client-secret.json
