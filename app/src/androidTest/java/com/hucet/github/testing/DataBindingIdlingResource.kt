@@ -16,9 +16,9 @@
 
 package com.hucet.github.testing
 
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.view.View
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentActivity
 import androidx.test.espresso.IdlingResource
 import androidx.test.rule.ActivityTestRule
