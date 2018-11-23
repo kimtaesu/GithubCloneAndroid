@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.hucet.github">
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
             android:allowBackup="false"
             android:name=".MyApplication"
@@ -20,5 +21,4 @@
                 android:name="io.fabric.ApiKey"
                 android:value="01a8a326ef40f1e4010685ff3fe389ad91c04149"/>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
