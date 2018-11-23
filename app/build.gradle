@@ -85,7 +85,6 @@ dependencies {
     implementation deps.dagger.android_support
     implementation deps.androidX.constraintlayout
     implementation deps.kotlin.stdlib
-
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
         transitive = true;
     }
@@ -100,8 +99,8 @@ dependencies {
     implementation deps.firebase.core
     debugImplementation deps.stetho
 
-    implementation deps.kotlin.coroutines_core
-    implementation deps.kotlin.coroutines_android
+//    implementation deps.kotlin.coroutines_core
+//    implementation deps.kotlin.coroutines_android
 
     implementation deps.locksecure.pin
 
