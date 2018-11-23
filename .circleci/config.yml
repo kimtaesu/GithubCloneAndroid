@@ -108,7 +108,7 @@ references:
       name: Export Fabric key
       command: echo 'export FABRIC_KEY="$FABRIC_KEY"' >> $BASH_ENV
   decode_fabric_key: &decode_fabric_key
-  run:
+    run:
       name: asdadasd
       command: echo $FABRIC_KEY | base64 -di
     run:
