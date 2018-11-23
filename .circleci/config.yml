@@ -125,7 +125,8 @@ jobs:
           name: Download dependencies
           command: ./gradlew androidDependencies
       - *save_cache
-      - *decode_gservices_key
+#      - *export_gservices_key
+#      - *decode_gservices_key
       - run:
           name: Gradle build (debug)
           command: ./gradlew -PciBuild=true :app:assembleDebug :app:assembleAndroidTest
@@ -148,7 +149,7 @@ jobs:
       - *export_android_key
       - *decode_android_key
 #      - *export_gservices_key
-      - *decode_gservices_key
+#      - *decode_gservices_key
       - *export_fabric_key
       - *decode_fabric_key
       - run:
@@ -174,7 +175,7 @@ jobs:
           command: ./gradlew androidDependencies
       - *save_cache
 #      - *export_gservices_key
-      - *decode_gservices_key
+#      - *decode_gservices_key
       - run:
           name: Run Lint
           command: ./gradlew -PciBuild=true lint
@@ -195,7 +196,7 @@ jobs:
           command: ./gradlew androidDependencies
       - *save_cache
 #      - *export_gservices_key
-      - *decode_gservices_key
+#      - *decode_gservices_key
       - run:
           name: Run unit tests
           command: ./gradlew -PciBuild=true testDebugUnitTest
@@ -251,7 +252,7 @@ jobs:
           name: Move Firebase coverage report
           command: mkdir -p app/build/outputs/code-coverage/connected && cp firebase/sailfish-26-en_US-portrait/artifacts/coverage.ec app/build/outputs/code-coverage/connected/coverage.ec
 #      - *export_gservices_key
-      - *decode_gservices_key
+#      - *decode_gservices_key
       - run:
           name: Generate JaCoCo report
           command: ./gradlew -PciBuild=true jacocoTestReport
