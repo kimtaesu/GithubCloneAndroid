@@ -8,4 +8,10 @@ class TestApplication : MyApplication() {
 
     override fun initFabric() {
     }
+
+    override fun initDagger() {
+    }
+
+    override fun initLeakCanary() {
+    }
 }

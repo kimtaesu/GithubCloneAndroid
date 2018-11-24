@@ -21,6 +21,7 @@ android {
         multiDexEnabled true
 
         buildConfigField 'Long', 'NETWORK_TIMEOUT_MILLIS', "3000L"
+        buildConfigField 'String', 'GITHUB_BASE_URL', '"https://api.github.com"'
     }
     buildTypes {
         debug {
@@ -75,7 +76,7 @@ dependencies {
     implementation deps.androidX.lifecycle.commonJava8
 
     implementation deps.retrofit.runtime
-    implementation deps.retrofit.gson
+    implementation deps.retrofit.moshi
     implementation deps.retrofit.rxjava
 
     implementation deps.glide.runtime
@@ -93,7 +94,6 @@ dependencies {
     implementation deps.timber
 
     implementation deps.rxBinding.binding
-    implementation deps.rxBinding.viewpager
 
     implementation deps.firebase.remoteConfig
     implementation deps.firebase.core
