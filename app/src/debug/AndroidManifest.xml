@@ -18,6 +18,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <application tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.hucet.github.MainActivity"></activity>
