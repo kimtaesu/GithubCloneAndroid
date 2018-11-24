@@ -51,7 +51,7 @@ versions.navigation = "1.0.0-alpha07"
 versions.navigation_testing = "1.0.0-alpha06"
 versions.firebase = "16.0.0"
 versions.leakcanary = "1.6.1"
-versions.coroutines = "0.25.0"
+versions.coroutines = "1.0.1"
 versions.pattern = "1.0.0"
 versions.kluent = '1.30'
 versions.rxBinding = "3.0.0-alpha1"
@@ -134,6 +134,7 @@ deps.arch_core = arch_core
 def retrofit = [:]
 retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"
 retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+retrofit.moshi = "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
 retrofit.mock = "com.squareup.retrofit2:retrofit-mock:$versions.retrofit"
 retrofit.rxjava = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
 deps.retrofit = retrofit
@@ -260,6 +261,7 @@ ext.deps = deps
 def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
+    handler.maven { url 'https://maven.fabric.io/public' }
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 

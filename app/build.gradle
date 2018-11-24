@@ -6,6 +6,7 @@ apply plugin: 'kotlin-kapt'
 apply from: "$project.rootDir/script/static-analysis.gradle"
 apply from: "$project.rootDir/script/jacoco.gradle"
 apply from: "$project.rootDir/script/allopen.gradle"
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -20,13 +21,17 @@ android {
         multiDexEnabled true
 
         buildConfigField 'Long', 'NETWORK_TIMEOUT_MILLIS', "3000L"
+        buildConfigField 'String', 'GITHUB_BASE_URL', '"https://api.github.com"'
     }
     buildTypes {
         debug {
             testCoverageEnabled true
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -42,6 +47,12 @@ android {
         test.java.srcDirs += "src/test-common/java"
     }
     testOptions.unitTests.includeAndroidResources = true
+    aaptOptions {
+        cruncherEnabled project.hasProperty('ciBuild')
+    }
+    dexOptions {
+        preDexLibraries !project.hasProperty('ciBuild')
+    }
 }
 androidExtensions {
     experimental = true
@@ -65,7 +76,7 @@ dependencies {
     implementation deps.androidX.lifecycle.commonJava8
 
     implementation deps.retrofit.runtime
-    implementation deps.retrofit.gson
+    implementation deps.retrofit.moshi
     implementation deps.retrofit.rxjava
 
     implementation deps.glide.runtime
@@ -75,13 +86,14 @@ dependencies {
     implementation deps.dagger.android_support
     implementation deps.androidX.constraintlayout
     implementation deps.kotlin.stdlib
-
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
+        transitive = true;
+    }
     implementation deps.rxkotlin
     implementation deps.rx_android
     implementation deps.timber
 
     implementation deps.rxBinding.binding
-    implementation deps.rxBinding.viewpager
 
     implementation deps.firebase.remoteConfig
     implementation deps.firebase.core
@@ -114,8 +126,8 @@ dependencies {
     testImplementation deps.kotlintest.assertions
     testImplementation deps.androidX.test.core
 
-    androidTestImplementation deps.androidX.test.rules
-    androidTestImplementation deps.androidX.test.runner
+    androidTestImplementation deps.atsl.runner
+    androidTestImplementation deps.atsl.rules
     androidTestImplementation deps.androidX.test.espressoCore
     androidTestImplementation deps.androidX.test.espressoContrib
     androidTestImplementation deps.androidX.test.espressoIntents
@@ -129,6 +141,7 @@ dependencies {
 
 repositories {
     maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 apply plugin: 'com.google.gms.google-services'

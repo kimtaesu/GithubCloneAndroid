@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GithubClone</string>
+    <string name="search_repos_hint">Search repos</string>
 </resources>
