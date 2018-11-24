@@ -4,9 +4,9 @@ import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.MutableLiveData
 import com.hucet.github.debug.OpenForTesting
 import com.hucet.github.repository.RepoRepository
+import com.hucet.github.views.common.DisposableViewModel
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.withLatestFrom
-import kr.co.irobo.finance.common.DisposableViewModel
 import javax.inject.Inject
 
 interface SearchRepoView {

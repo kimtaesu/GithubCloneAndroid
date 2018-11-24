@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">GithubClone</string>
-    <string name="title_datasoruce">DataSource</string>
     <string name="search_repos_hint">Search repos</string>
 </resources>

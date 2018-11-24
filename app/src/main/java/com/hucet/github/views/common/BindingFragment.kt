@@ -1,4 +1,4 @@
-package kr.co.irobo.finance.common
+package com.hucet.github.views.common
 
 import android.os.Bundle
 import android.view.LayoutInflater

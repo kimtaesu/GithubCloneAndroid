@@ -9,11 +9,11 @@ import com.hucet.github.databinding.FragmentSearchRepoBinding
 import com.hucet.github.debug.OpenForTesting
 import com.hucet.github.di.Injectable
 import com.hucet.github.utils.get
+import com.hucet.github.views.common.BindingFragment
 import com.jakewharton.rxbinding3.widget.editorActions
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_search_repo.search
-import kr.co.irobo.finance.common.BindingFragment
 import timber.log.Timber
 import javax.inject.Inject
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.hucet.tyler.memo.common
+package com.hucet.github.views.common
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

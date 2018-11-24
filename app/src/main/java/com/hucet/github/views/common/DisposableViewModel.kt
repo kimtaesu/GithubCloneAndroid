@@ -1,4 +1,4 @@
-package kr.co.irobo.finance.common
+package com.hucet.github.views.common
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
