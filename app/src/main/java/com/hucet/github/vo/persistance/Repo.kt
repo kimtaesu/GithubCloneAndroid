@@ -1,4 +1,4 @@
-package com.hucet.github.db
+package com.hucet.github.vo.persistance
 
 import android.os.Parcelable
 import androidx.room.Embedded

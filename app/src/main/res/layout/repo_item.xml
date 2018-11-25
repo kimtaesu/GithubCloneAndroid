@@ -8,7 +8,7 @@
 
         <variable
                 name="repo"
-                type="com.hucet.github.db.Repo" />
+                type="com.hucet.github.vo.persistance.Repo" />
     </data>
 
     <androidx.cardview.widget.CardView
