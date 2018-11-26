@@ -12,6 +12,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         if (savedInstanceState == null)
             supportFragmentManager.beginTransaction().replace(android.R.id.content, SearchRepoFragment()).commit()
     }
