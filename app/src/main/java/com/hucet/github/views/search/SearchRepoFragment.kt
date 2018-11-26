@@ -53,7 +53,7 @@ class SearchRepoFragment : BindingFragment<FragmentSearchRepoBinding>(), Injecta
         }
 
         viewModel.results.observe(this, Observer {
-            Timber.i("search: [${it}]")
+            Timber.i("search: [$it]")
             when (it.status) {
                 Status.SUCCESS -> {
                     adapter.submitList(it.data)
@@ -67,7 +67,6 @@ class SearchRepoFragment : BindingFragment<FragmentSearchRepoBinding>(), Injecta
                             .show()
                 }
                 Status.LOADING -> {
-
                 }
             }
         })

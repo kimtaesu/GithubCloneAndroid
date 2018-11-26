@@ -7,18 +7,13 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-
 @Module
 class RoomModule {
     @Singleton
     @Provides
-    internal fun providesRoomDatabase(application: Application): GithubDabase {
-        return GithubDabase.getInstance(application)
-    }
+    internal fun providesRoomDatabase(application: Application): GithubDabase = GithubDabase.getInstance(application)
 
     @Singleton
     @Provides
-    internal fun providesColorThemeDao(dataBase: GithubDabase): RepoDao {
-        return dataBase.repoDao()
-    }
+    internal fun providesColorThemeDao(dataBase: GithubDabase): RepoDao = dataBase.repoDao()
 }

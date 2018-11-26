@@ -18,6 +18,8 @@
     <issue id="IconDensities" severity="ignore" />
     <issue id="ContentDescription" severity="ignore" />
     <issue id="GoogleAppIndexingWarning" severity="ignore" />
+    <issue id="UnusedAttribute" severity="ignore" />
+    <issue id="UnusedResources" severity="ignore" />
     <issue id="Autofill" severity="ignore" />
     <issue id="UnusedAttribute">
         <ignore regexp="autofillHints" />

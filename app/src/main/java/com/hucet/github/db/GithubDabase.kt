@@ -9,7 +9,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.hucet.github.vo.persistance.Repo
 import com.hucet.github.vo.persistance.RepoSearchResult
 
-
 /**
  * Main database description.
  */
@@ -47,19 +46,15 @@ abstract class GithubDabase : RoomDatabase() {
             return INSTANCE!!
         }
 
-        private fun buildDatabase(context: Context): GithubDabase {
-            return Room.databaseBuilder(context,
-                                        GithubDabase::class.java, "git_db")
-                    .populate(context)
-                    .build()
-        }
+        private fun buildDatabase(context: Context): GithubDabase =
+                Room.databaseBuilder(context, GithubDabase::class.java, "git_db")
+                        .populate(context)
+                        .build()
     }
 }
 
-private fun <T : RoomDatabase> RoomDatabase.Builder<T>.populate(context: Context): RoomDatabase.Builder<T> {
-    return this.addCallback(object : RoomDatabase.Callback() {
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-        }
-    })
-}
+private fun <T : RoomDatabase> RoomDatabase.Builder<T>.populate(context: Context): RoomDatabase.Builder<T> = this.addCallback(object : RoomDatabase.Callback() {
+    override fun onCreate(db: SupportSQLiteDatabase) {
+        super.onCreate(db)
+    }
+})
