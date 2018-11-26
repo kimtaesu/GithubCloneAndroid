@@ -267,21 +267,21 @@ jobs:
           destination: /reports/
 
   ## Deploy release APK to Fabric Beta
-#
-#  deploy:
-#    <<: *android_config
-#    steps:
-#      - checkout
-#      - *attach_release_workspace
-#      - *restore_cache
-#      - run:
-#          name: Download dependencies
-#          command: ./gradlew androidDependencies
-#      - *export_fabric_key
-#      - *decode_fabric_key
-#      - run:
-#          name: Deploy to Fabric Beta
-#          command: ./gradlew -PciBuild=true :mobile:crashlyticsUploadDistributionRelease
+
+  deploy:
+    <<: *android_config
+    steps:
+      - checkout
+      - *attach_release_workspace
+      - *restore_cache
+      - run:
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - *export_fabric_key
+      - *decode_fabric_key
+      - run:
+          name: Deploy to Fabric Beta
+          command: ./gradlew -PciBuild=true :crashlyticsUploadDistributionRelease
 
 workflows:
   version: 2
@@ -302,13 +302,13 @@ workflows:
           requires:
             - test_unit
             - test_instrumented
-#      - deploy:
-#          filters:
-#            branches:
-#              only:
-#                - master
-#          requires:
-#            - build_release
-#            - check_quality
-#            - test_unit
-#            - test_instrumented
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build_release
+            - check_quality
+            - test_unit
+            - test_instrumented

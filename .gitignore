@@ -11,3 +11,6 @@
 .externalNativeBuild
 .idea
 /app/fabric.properties
+/keystore.properties
+/key-store.jks
+/app/release/

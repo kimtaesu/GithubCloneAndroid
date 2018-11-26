@@ -6,6 +6,7 @@ apply plugin: 'kotlin-kapt'
 apply from: "$project.rootDir/script/static-analysis.gradle"
 apply from: "$project.rootDir/script/jacoco.gradle"
 apply from: "$project.rootDir/script/allopen.gradle"
+apply from: "signing.gradle"
 apply plugin: 'io.fabric'
 
 android {
@@ -16,7 +17,7 @@ android {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "com.hucet.github.testing.TestRunner"
         multiDexEnabled true
 
@@ -32,6 +33,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

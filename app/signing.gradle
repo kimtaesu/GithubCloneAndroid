@@ -1,0 +1,25 @@
+android {
+    signingConfigs {
+        def keystoreProperties = loadKeyStoreProperties()
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+}
+
+
+def loadKeyStoreProperties() {
+    // Create a variable called keystorePropertiesFile, and initialize it to your
+// keystore.properties file, in the rootProject folder.
+    def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+    def keystoreProperties = new Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    return keystoreProperties
+}
