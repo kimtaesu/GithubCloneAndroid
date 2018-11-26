@@ -1,6 +1,6 @@
 package com.hucet.github.vo
 
-import com.hucet.github.db.Repo
+import com.hucet.github.vo.persistance.Repo
 import com.squareup.moshi.Json
 
 data class RepoSearchResponse(
